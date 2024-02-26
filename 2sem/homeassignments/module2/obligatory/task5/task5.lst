@@ -1,0 +1,495 @@
+Microsoft (R) Macro Assembler Version 6.14.8444		    04/01/18 15:46:37
+task5.asm						     Page 1 - 1
+
+
+				include console.inc
+			      C .NOLIST
+			      C .LIST
+			      C 
+			      C 
+			      C ;include masm32.inc
+			      C 
+			      C    includelib masm32.lib
+			      C    includelib user32.lib
+			      C    includelib kernel32.lib
+			      C    includelib msvcrt.lib
+			      C    includelib io_proc.lib
+			      C    
+			      C 
+ 00000019			.data
+ = 0000001E			        N EQU 30
+ 00000019  0000001E [		        X dd N dup (?)
+	    00000000
+	   ]
+ 00000000			.code
+ 00000000			    Start:
+				        ConsoleTitle 'Zvonov Andrey, 110 group, obligatory task 5'
+
+				        inint ESI, 'Enter number of elements: '
+ 00000074  8B DE		        mov EBX, ESI
+ 00000076  B9 00000000		        mov ECX, 0
+
+ 0000007B  3B CE		inp:    cmp ECX, ESI
+ 0000007D  74 1C		        je ou
+				        inint X[4 * ECX]
+ 00000098  41			        inc ECX
+ 00000099  EB E0		        jmp inp
+
+ 0000009B			ou:     ;pass
+ 0000009B  8B CE		        mov ECX, ESI
+ 0000009D  49			        dec ECX
+ 0000009E  83 F9 00		outer:  cmp ECX, 0
+ 000000A1  74 3C		        je fin
+ 000000A3  B8 00000000		        mov EAX, 0
+ 000000A8  BF 00000000		        mov EDI, 0
+
+ 000000AD  3B C1		inner:  cmp EAX, ECX
+ 000000AF  74 28		        je infin
+ 000000B1  8B 1C 85		        mov EBX, X[4*EAX];      inner cycle counter
+	   00000019 R
+ 000000B8  8B 14 8D		        mov EDX, X[4*ECX];      outer cycle counter
+	   00000019 R
+ 000000BF  3B DA		        cmp EBX, EDX
+ 000000C1  7E 13		        jle no
+ 000000C3  89 14 85		        mov X[4*EAX], EDX
+	   00000019 R
+ 000000CA  89 1C 8D		        mov X[4*ECX], EBX
+	   00000019 R
+ 000000D1  BF 00000001		        mov EDI, 1
+
+ 000000D6  40			no:     inc EAX
+ 000000D7  EB D4		        jmp inner
+
+ 000000D9  83 FF 00		infin:  cmp EDI, 0
+ 000000DC  49			        dec ECX
+ 000000DD  EB BF		        jmp outer
+
+ 000000DF  B9 00000000		fin:    mov ECX, 0
+
+ 000000E4  3B CE		output: cmp ECX, ESI
+ 000000E6  74 78		        je term
+				        outint X[4 * ECX]
+				        outchar ' '
+ 0000015D  41			        inc ECX
+ 0000015E  EB 84		        jmp output
+
+ 00000160			term:   outcharln ' '
+				        pause 'Press any key to terminate'
+
+
+				    exit
+				    end Start
+Microsoft (R) Macro Assembler Version 6.14.8444		    04/01/18 15:46:37
+task5.asm						     Symbols 2 - 1
+
+
+
+
+Macros:
+
+                N a m e                 Type
+
+??CheckStrToBuf  . . . . . . . .	Proc
+??RestoreReg . . . . . . . . . .	Proc
+??SaveReg  . . . . . . . . . . .	Proc
+@inchar  . . . . . . . . . . . .	Func
+@inintln . . . . . . . . . . . .	Func
+@inint . . . . . . . . . . . . .	Func
+@readkey . . . . . . . . . . . .	Func
+ChagePageAttr  . . . . . . . . .	Proc
+ClrScr . . . . . . . . . . . . .	Proc
+ConsoleMode  . . . . . . . . . .	Proc
+ConsoleTitle . . . . . . . . . .	Proc
+DOS  . . . . . . . . . . . . . .	Func
+DownloadFile . . . . . . . . . .	Proc
+GetConsoleTitle  . . . . . . . .	Proc
+HeapBlockSize  . . . . . . . . .	Proc
+InputStr . . . . . . . . . . . .	Proc
+MsgBox . . . . . . . . . . . . .	Proc
+NewConsole . . . . . . . . . . .	Proc
+OpenFile . . . . . . . . . . . .	Proc
+OutFlafs . . . . . . . . . . . .	Proc
+RunExe . . . . . . . . . . . . .	Proc
+SetScreenSize  . . . . . . . . .	Proc
+SetTextAttr  . . . . . . . . . .	Proc
+TotalHeapAllocated . . . . . . .	Proc
+WhereX . . . . . . . . . . . . .	Proc
+WhereY . . . . . . . . . . . . .	Proc
+dispose  . . . . . . . . . . . .	Proc
+exit . . . . . . . . . . . . . .	Proc
+flush  . . . . . . . . . . . . .	Proc
+gotoXY . . . . . . . . . . . . .	Proc
+inchar . . . . . . . . . . . . .	Proc
+inintln  . . . . . . . . . . . .	Proc
+inint  . . . . . . . . . . . . .	Proc
+newline  . . . . . . . . . . . .	Proc
+new  . . . . . . . . . . . . . .	Proc
+outcharln  . . . . . . . . . . .	Proc
+outchar  . . . . . . . . . . . .	Proc
+outdateln  . . . . . . . . . . .	Proc
+outdate  . . . . . . . . . . . .	Proc
+outintln . . . . . . . . . . . .	Proc
+outint . . . . . . . . . . . . .	Proc
+outnumln . . . . . . . . . . . .	Proc
+outnum . . . . . . . . . . . . .	Proc
+outstrln . . . . . . . . . . . .	Proc
+outstr . . . . . . . . . . . . .	Proc
+outtimeln  . . . . . . . . . . .	Proc
+outtime  . . . . . . . . . . . .	Proc
+outwordln  . . . . . . . . . . .	Proc
+outword  . . . . . . . . . . . .	Proc
+pause  . . . . . . . . . . . . .	Proc
+readkey  . . . . . . . . . . . .	Proc
+
+
+Structures and Unions:
+
+                N a m e                  Size
+                                         Offset      Type
+
+CONSOLE_SCREEN_BUFFER_INFO . . .	 00000016
+  dwSize . . . . . . . . . . . .	 00000000	 DWord
+  dwCursorPosition . . . . . . .	 00000004	 DWord
+  wAttributes  . . . . . . . . .	 00000008	 Word
+  srWindow . . . . . . . . . . .	 0000000A	 QWord
+  dwMaximumWindowSize  . . . . .	 00000012	 DWord
+COORD  . . . . . . . . . . . . .	 00000004
+  x  . . . . . . . . . . . . . .	 00000000	 Word
+  y  . . . . . . . . . . . . . .	 00000002	 Word
+SMALL_RECT . . . . . . . . . . .	 00000008
+  Left . . . . . . . . . . . . .	 00000000	 Word
+  Top  . . . . . . . . . . . . .	 00000002	 Word
+  Right  . . . . . . . . . . . .	 00000004	 Word
+  Bottom . . . . . . . . . . . .	 00000006	 Word
+SystemTime . . . . . . . . . . .	 00000010
+  wYear  . . . . . . . . . . . .	 00000000	 Word
+  wMonth . . . . . . . . . . . .	 00000002	 Word
+  wDayOfWeek . . . . . . . . . .	 00000004	 Word
+  wDay . . . . . . . . . . . . .	 00000006	 Word
+  wHour  . . . . . . . . . . . .	 00000008	 Word
+  wMinute  . . . . . . . . . . .	 0000000A	 Word
+  wSecond  . . . . . . . . . . .	 0000000C	 Word
+  wMilliseconds  . . . . . . . .	 0000000E	 Word
+
+
+Types:
+
+                N a m e                  Size     Attr
+
+c_msvcrt . . . . . . . . . . . .	 00000004     CODE 
+
+
+Segments and Groups:
+
+                N a m e                 Size     Length   Align   Combine Class
+
+FLAT . . . . . . . . . . . . . .	GROUP
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 000005C3 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000363 Para	  Public  'CODE'	
+
+
+Procedures,  parameters and locals:
+
+                N a m e                 Type     Value    Attr
+
+CharToOemA . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ClearScreen  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetCommandLineA  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetConsoleScreenBufferInfo . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetModuleHandleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetStdHandle . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetSystemMetrics . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GetSystemTime  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GlobalAlloc  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GlobalFree . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+GlobalSize . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+InternetGetConnectedState  . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+MessageBoxIndirectA  . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetConsoleCursorPosition . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetConsoleScreenBufferSize . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetConsoleTextAttribute  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+StdIn  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+StdOut . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+URLDownloadToFileA . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+VirtualProtect . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+shell_ex . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+shell  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+wait_key . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+
+
+Symbols:
+
+                N a m e                 Type     Value    Attr
+
+??0000 . . . . . . . . . . . . .	Byte	 00000092 _DATA	
+??0001 . . . . . . . . . . . . .	Text   	 "
+??0002 . . . . . . . . . . . . .	Byte	 00000091 _DATA	
+??0004 . . . . . . . . . . . . .	L Near	 0000002A _TEXT	
+??0005 . . . . . . . . . . . . .	Number	 00000004h   
+??0006 . . . . . . . . . . . . .	DWord	 000000BE _DATA	
+??0007 . . . . . . . . . . . . .	Byte	 000000C3 _DATA	
+??0008 . . . . . . . . . . . . .	Text   	 "
+??0009 . . . . . . . . . . . . .	Byte	 000000C2 _DATA	
+??000B . . . . . . . . . . . . .	L Near	 0000005D _TEXT	
+??000C . . . . . . . . . . . . .	Number	 00000000h   
+??000D . . . . . . . . . . . . .	DWord	 000000DE _DATA	
+??000E . . . . . . . . . . . . .	Number	 00000000h   
+??000F . . . . . . . . . . . . .	Byte	 000000E2 _DATA	
+??0017 . . . . . . . . . . . . .	Number	 00000004h   
+??0018 . . . . . . . . . . . . .	Number	 00000000h   
+??0019 . . . . . . . . . . . . .	Byte	 000000E5 _DATA	
+??001B . . . . . . . . . . . . .	Byte	 000000E8 _DATA	
+??001C . . . . . . . . . . . . .	Text   	 o
+??001D . . . . . . . . . . . . .	Byte	 000000E7 _DATA	
+??001E . . . . . . . . . . . . .	L Near	 0000011E _TEXT	
+??001F . . . . . . . . . . . . .	L Near	 00000154 _TEXT	
+??0020 . . . . . . . . . . . . .	Number	 00000000h   
+??0021 . . . . . . . . . . . . .	Byte	 000001B0 _DATA	
+??0023 . . . . . . . . . . . . .	Byte	 000001B3 _DATA	
+??0024 . . . . . . . . . . . . .	Text   	 o
+??0025 . . . . . . . . . . . . .	Byte	 000001B2 _DATA	
+??0026 . . . . . . . . . . . . .	L Near	 0000017A _TEXT	
+??0027 . . . . . . . . . . . . .	L Near	 000001B0 _TEXT	
+??0028 . . . . . . . . . . . . .	Number	 00000000h   
+??0029 . . . . . . . . . . . . .	Byte	 0000027B _DATA	
+??002B . . . . . . . . . . . . .	Byte	 0000027E _DATA	
+??002C . . . . . . . . . . . . .	Text   	 o
+??002D . . . . . . . . . . . . .	Byte	 0000027D _DATA	
+??002E . . . . . . . . . . . . .	L Near	 000001D3 _TEXT	
+??002F . . . . . . . . . . . . .	L Near	 00000209 _TEXT	
+??0030 . . . . . . . . . . . . .	Number	 00000000h   
+??0031 . . . . . . . . . . . . .	Byte	 00000346 _DATA	
+??0033 . . . . . . . . . . . . .	Byte	 00000349 _DATA	
+??0034 . . . . . . . . . . . . .	Text   	 o
+??0035 . . . . . . . . . . . . .	Byte	 00000348 _DATA	
+??0036 . . . . . . . . . . . . .	L Near	 0000022C _TEXT	
+??0037 . . . . . . . . . . . . .	L Near	 00000262 _TEXT	
+??0038 . . . . . . . . . . . . .	Byte	 00000412 _DATA	
+??0039 . . . . . . . . . . . . .	Text   	 "
+??003A . . . . . . . . . . . . .	Byte	 00000411 _DATA	
+??003C . . . . . . . . . . . . .	L Near	 00000295 _TEXT	
+??003D . . . . . . . . . . . . .	Number	 00000000h   
+??003E . . . . . . . . . . . . .	Byte	 0000042D _DATA	
+??0040 . . . . . . . . . . . . .	Byte	 00000430 _DATA	
+??0041 . . . . . . . . . . . . .	Text   	 o
+??0042 . . . . . . . . . . . . .	Byte	 0000042F _DATA	
+??0043 . . . . . . . . . . . . .	L Near	 000002C3 _TEXT	
+??0044 . . . . . . . . . . . . .	L Near	 000002F9 _TEXT	
+??0045 . . . . . . . . . . . . .	Number	 00000000h   
+??0046 . . . . . . . . . . . . .	Byte	 000004F8 _DATA	
+??0048 . . . . . . . . . . . . .	Byte	 000004FB _DATA	
+??0049 . . . . . . . . . . . . .	Text   	 o
+??004A . . . . . . . . . . . . .	Byte	 000004FA _DATA	
+??004B . . . . . . . . . . . . .	L Near	 0000031C _TEXT	
+??004C . . . . . . . . . . . . .	L Near	 00000352 _TEXT	
+??CommonHeapElemSize . . . . . .	DWord	 00000004 _DATA	
+??ConsoleMode  . . . . . . . . .	Byte	 00000008 _DATA	
+??TotalHeapAllocated . . . . . .	DWord	 00000000 _DATA	
+??sTime  . . . . . . . . . . . .	SystemTime  00000009 _DATA	
+@CodeSize  . . . . . . . . . . .	Number	 00000000h   
+@DataSize  . . . . . . . . . . .	Number	 00000000h   
+@InChar  . . . . . . . . . . . .	Text   	 @inchar
+@InInt . . . . . . . . . . . . .	Text   	 @inint
+@Inchar  . . . . . . . . . . . .	Text   	 @inchar
+@InintLn . . . . . . . . . . . .	Text   	 @inintln
+@Inintln . . . . . . . . . . . .	Text   	 @inintln
+@Inint . . . . . . . . . . . . .	Text   	 @inint
+@Interface . . . . . . . . . . .	Number	 00000003h   
+@Model . . . . . . . . . . . . .	Number	 00000007h   
+@ReadKey . . . . . . . . . . . .	Text   	 @readkey
+@code  . . . . . . . . . . . . .	Text   	 _TEXT
+@data  . . . . . . . . . . . . .	Text   	 FLAT
+@fardata?  . . . . . . . . . . .	Text   	 FLAT
+@fardata . . . . . . . . . . . .	Text   	 FLAT
+@stack . . . . . . . . . . . . .	Text   	 FLAT
+AllocConsole@0 . . . . . . . . .	L Near	 00000000 FLAT	External STDCALL
+Black  . . . . . . . . . . . . .	Number	 00000000h   
+Blue . . . . . . . . . . . . . .	Number	 00000001h   
+Bright . . . . . . . . . . . . .	Number	 00000008h   
+Brown  . . . . . . . . . . . . .	Number	 00000006h   
+CREATE_ALWAYS  . . . . . . . . .	Number	 00000002h   
+CREATE_NEW . . . . . . . . . . .	Number	 00000001h   
+CharToOem  . . . . . . . . . . .	Text   	 CharToOemA
+Cls  . . . . . . . . . . . . . .	Text   	 ClrScr
+CreateFile . . . . . . . . . . .	Text   	 CreateFileA
+Cyan . . . . . . . . . . . . . .	Number	 00000003h   
+DarkGray . . . . . . . . . . . .	Number	 00000008h   
+Dispose  . . . . . . . . . . . .	Text   	 dispose
+Exit . . . . . . . . . . . . . .	Text   	 exit
+FILE_ATTRIBUTE_ARCHIVE . . . . .	Number	 00000020h   
+FILE_ATTRIBUTE_COMPRESSED  . . .	Number	 00000800h   
+FILE_ATTRIBUTE_DIRECTORY . . . .	Number	 00000010h   
+FILE_ATTRIBUTE_HIDDEN  . . . . .	Number	 00000002h   
+FILE_ATTRIBUTE_NORMAL  . . . . .	Number	 00000080h   
+FILE_ATTRIBUTE_READONLY  . . . .	Number	 00000001h   
+FILE_ATTRIBUTE_SYSTEM  . . . . .	Number	 00000004h   
+FILE_ATTRIBUTE_TEMPORARY . . . .	Number	 00000100h   
+Flush  . . . . . . . . . . . . .	Text   	 flush
+FreeConsole@0  . . . . . . . . .	L Near	 00000000 FLAT	External STDCALL
+GENERIC_ALL  . . . . . . . . . .	Number	 10000000h   
+GENERIC_EXECUTE  . . . . . . . .	Number	 20000000h   
+GENERIC_READ . . . . . . . . . .	Number	 -80000000h   
+GENERIC_WRITE  . . . . . . . . .	Number	 40000000h   
+GMEM_FIXED . . . . . . . . . . .	Number	 00000000h   
+GMEM_ZEROINIT  . . . . . . . . .	Number	 00000040h   
+GetCommandLine . . . . . . . . .	Text   	 GetCommandLineA
+GetModuleHandle  . . . . . . . .	Text   	 GetModuleHandleA
+GotoXY . . . . . . . . . . . . .	Text   	 gotoXY
+Green  . . . . . . . . . . . . .	Number	 00000002h   
+IDABORT  . . . . . . . . . . . .	Number	 00000003h   
+IDCANCEL . . . . . . . . . . . .	Number	 00000002h   
+IDIGNORE . . . . . . . . . . . .	Number	 00000005h   
+IDNO . . . . . . . . . . . . . .	Number	 00000007h   
+IDOK . . . . . . . . . . . . . .	Number	 00000001h   
+IDRETRY  . . . . . . . . . . . .	Number	 00000004h   
+IDYES  . . . . . . . . . . . . .	Number	 00000006h   
+InChar . . . . . . . . . . . . .	Text   	 inchar
+InInt  . . . . . . . . . . . . .	Text   	 inint
+Inchar . . . . . . . . . . . . .	Text   	 inchar
+InintLn  . . . . . . . . . . . .	Text   	 inintln
+Inintln  . . . . . . . . . . . .	Text   	 inintln
+Inint  . . . . . . . . . . . . .	Text   	 inint
+LANG_NEUTRAL . . . . . . . . . .	Number	 00000000h   
+LightBlue  . . . . . . . . . . .	Number	 00000009h   
+LightGray  . . . . . . . . . . .	Number	 00000007h   
+LightGreen . . . . . . . . . . .	Number	 0000000Ah   
+LightMagenta . . . . . . . . . .	Number	 0000000Dh   
+LightRed . . . . . . . . . . . .	Number	 0000000Ch   
+MB_ABORTRETRYIGNORE  . . . . . .	Number	 00000002h   
+MB_CANCELTRYCONTINUE . . . . . .	Number	 00000006h   
+MB_DEFBUTTON1  . . . . . . . . .	Number	 00000000h   
+MB_DEFBUTTON2  . . . . . . . . .	Number	 00000100h   
+MB_DEFBUTTON3  . . . . . . . . .	Number	 00000200h   
+MB_DEFBUTTON4  . . . . . . . . .	Number	 00000300h   
+MB_HELP  . . . . . . . . . . . .	Number	 00004000h   
+MB_ICONASTERISK  . . . . . . . .	Number	 00000040h   
+MB_ICONEXCLAMATION . . . . . . .	Number	 00000030h   
+MB_ICONHAND  . . . . . . . . . .	Number	 00000008h   
+MB_ICONQUESTION  . . . . . . . .	Number	 00000020h   
+MB_ICONSTOP  . . . . . . . . . .	Number	 00000010h   
+MB_OKCANCEL  . . . . . . . . . .	Number	 00000001h   
+MB_OK  . . . . . . . . . . . . .	Number	 00000000h   
+MB_RETRYCANCEL . . . . . . . . .	Number	 00000005h   
+MB_RIGHT . . . . . . . . . . . .	Number	 00080000h   
+MB_SYSTEMMODAL . . . . . . . . .	Number	 00001000h   
+MB_USERICON  . . . . . . . . . .	Number	 00000080h   
+MB_YESNOCANCEL . . . . . . . . .	Number	 00000003h   
+MB_YESNO . . . . . . . . . . . .	Number	 00000004h   
+Magenta  . . . . . . . . . . . .	Number	 00000005h   
+MessageBoxIndirect . . . . . . .	Text   	 MessageBoxIndirectA
+MessageBox . . . . . . . . . . .	Text   	 MessageBoxA
+NULL . . . . . . . . . . . . . .	Number	 00000000h   
+NewLine  . . . . . . . . . . . .	Text   	 newline
+Newline  . . . . . . . . . . . .	Text   	 newline
+New  . . . . . . . . . . . . . .	Text   	 new
+N  . . . . . . . . . . . . . . .	Number	 0000001Eh   
+OPEN_ALWAYS  . . . . . . . . . .	Number	 00000004h   
+OPEN_EXISTING  . . . . . . . . .	Number	 00000003h   
+OutCharLn  . . . . . . . . . . .	Text   	 outcharln
+OutCharln  . . . . . . . . . . .	Text   	 outcharln
+OutChar  . . . . . . . . . . . .	Text   	 outchar,prompt:VARARG
+OutDateLn  . . . . . . . . . . .	Text   	 outdateln
+OutDateln  . . . . . . . . . . .	Text   	 outdateln
+OutDate  . . . . . . . . . . . .	Text   	 outdate
+OutILn . . . . . . . . . . . . .	Text   	 outintln
+OutIln . . . . . . . . . . . . .	Text   	 outintln
+OutIntLn . . . . . . . . . . . .	Text   	 outintln
+OutInt . . . . . . . . . . . . .	Text   	 outint
+OutI . . . . . . . . . . . . . .	Text   	 outint
+OutNumLn . . . . . . . . . . . .	Text   	 outnumln
+OutNumln . . . . . . . . . . . .	Text   	 outnumln
+OutNum . . . . . . . . . . . . .	Text   	 outnum
+OutStrLn . . . . . . . . . . . .	Text   	 outstrln
+OutStr . . . . . . . . . . . . .	Text   	 outstr
+OutTimeLn  . . . . . . . . . . .	Text   	 outtimeln
+OutTimeln  . . . . . . . . . . .	Text   	 outtimeln
+OutTime  . . . . . . . . . . . .	Text   	 outtime
+OutULn . . . . . . . . . . . . .	Text   	 outwordln
+OutUln . . . . . . . . . . . . .	Text   	 outwordln
+OutUnsignedLn  . . . . . . . . .	Text   	 outwordln
+OutUnsignedln  . . . . . . . . .	Text   	 outwordln
+OutUnsigned  . . . . . . . . . .	Text   	 outword
+OutU . . . . . . . . . . . . . .	Text   	 outword
+OutWordLn  . . . . . . . . . . .	Text   	 outwordln
+OutWord  . . . . . . . . . . . .	Text   	 outword
+OutintLn . . . . . . . . . . . .	Text   	 outintln
+Outintln . . . . . . . . . . . .	Text   	 outintln
+Outint . . . . . . . . . . . . .	Text   	 outint
+OutstrLn . . . . . . . . . . . .	Text   	 outstrln
+OutwordLn  . . . . . . . . . . .	Text   	 outwordln
+Outword  . . . . . . . . . . . .	Text   	 outword
+PAGE_EXECUTE_READWRITE . . . . .	Number	 00000040h   
+PAGE_EXECUTE_READ  . . . . . . .	Number	 00000020h   
+PAGE_EXECUTE_WRITECOPY . . . . .	Number	 00000080h   
+PAGE_EXECUTE . . . . . . . . . .	Number	 00000010h   
+PAGE_NOACCESS  . . . . . . . . .	Number	 00000001h   
+PAGE_READONLY  . . . . . . . . .	Number	 00000002h   
+PAGE_READWRITE . . . . . . . . .	Number	 00000004h   
+PAGE_WRITECOPY . . . . . . . . .	Number	 00000008h   
+Pause  . . . . . . . . . . . . .	Text   	 pause
+ReadKey  . . . . . . . . . . . .	Text   	 readkey
+Red  . . . . . . . . . . . . . .	Number	 00000004h   
+STD_ERROR_HANDLE . . . . . . . .	Number	 -0000000Ch   
+STD_INPUT_HANDLE . . . . . . . .	Number	 -0000000Ah   
+STD_OUTPUT_HANDLE  . . . . . . .	Number	 -0000000Bh   
+SetConsoleTitle  . . . . . . . .	Text   	 SetConsoleTitleA
+Start  . . . . . . . . . . . . .	L Near	 00000000 _TEXT	Public STDCALL
+TRUNCATE_EXISTING  . . . . . . .	Number	 00000005h   
+URLDownloadToFile  . . . . . . .	Text   	 URLDownloadToFileA
+White  . . . . . . . . . . . . .	Number	 0000000Fh   
+X  . . . . . . . . . . . . . . .	DWord	 00000019 _DATA	
+Yellow . . . . . . . . . . . . .	Number	 0000000Eh   
+_imp__printf . . . . . . . . . .	DWord	 00000000 FLAT	External STDCALL
+_imp__sprintf  . . . . . . . . .	DWord	 00000000 FLAT	External STDCALL
+black  . . . . . . . . . . . . .	Number	 00000000h   
+blue . . . . . . . . . . . . . .	Number	 00000001h   
+bright . . . . . . . . . . . . .	Number	 00000008h   
+brown  . . . . . . . . . . . . .	Number	 00000006h   
+clrscr . . . . . . . . . . . . .	Text   	 ClrScr
+crt_printf . . . . . . . . . . .	Text   	 _imp__printf
+crt_sprintf  . . . . . . . . . .	Text   	 _imp__sprintf
+cyan . . . . . . . . . . . . . .	Number	 00000003h   
+darkgray . . . . . . . . . . . .	Number	 00000008h   
+dos  . . . . . . . . . . . . . .	Text   	 DOS
+downloadfile . . . . . . . . . .	Text   	 DownloadFile
+fin  . . . . . . . . . . . . . .	L Near	 000000DF _TEXT	
+gotoxy . . . . . . . . . . . . .	Text   	 gotoXY
+green  . . . . . . . . . . . . .	Number	 00000002h   
+heapblocksize  . . . . . . . . .	Text   	 HeapBlockSize
+infin  . . . . . . . . . . . . .	L Near	 000000D9 _TEXT	
+inint_proc@0 . . . . . . . . . .	L Near	 00000000 FLAT	External STDCALL
+inner  . . . . . . . . . . . . .	L Near	 000000AD _TEXT	
+inputstr . . . . . . . . . . . .	Text   	 InputStr
+inp  . . . . . . . . . . . . . .	L Near	 0000007B _TEXT	
+lightblue  . . . . . . . . . . .	Number	 00000009h   
+lightgray  . . . . . . . . . . .	Number	 00000007h   
+lightgreen . . . . . . . . . . .	Number	 0000000Ah   
+lightmagenta . . . . . . . . . .	Number	 0000000Dh   
+lightred . . . . . . . . . . . .	Number	 0000000Ch   
+magenta  . . . . . . . . . . . .	Number	 00000005h   
+nil  . . . . . . . . . . . . . .	DWord 	 00000000h   
+no . . . . . . . . . . . . . . .	L Near	 000000D6 _TEXT	
+outer  . . . . . . . . . . . . .	L Near	 0000009E _TEXT	
+outintLn . . . . . . . . . . . .	Text   	 outintln
+output . . . . . . . . . . . . .	L Near	 000000E4 _TEXT	
+outwordLn  . . . . . . . . . . .	Text   	 outwordln
+ou . . . . . . . . . . . . . . .	L Near	 0000009B _TEXT	
+red  . . . . . . . . . . . . . .	Number	 00000004h   
+settextattr  . . . . . . . . . .	Text   	 SetTextAttr
+term . . . . . . . . . . . . . .	L Near	 00000160 _TEXT	
+whereX . . . . . . . . . . . . .	Text   	 WhereX
+whereY . . . . . . . . . . . . .	Text   	 WhereY
+wherex . . . . . . . . . . . . .	Text   	 WhereX
+wherey . . . . . . . . . . . . .	Text   	 WhereY
+white  . . . . . . . . . . . . .	Number	 0000000Fh   
+yellow . . . . . . . . . . . . .	Number	 0000000Eh   
+
+	   0 Warnings
+	   0 Errors
